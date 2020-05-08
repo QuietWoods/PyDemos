@@ -1,4 +1,4 @@
-# Python Demos
+# Python Demos commodity detail info
 这个repo中的py文件都是一些我在学习Python过程中动手练习的小示例，希望随着练习的增多，写出更好的Python代码。
 
 ## 1.淘宝商品信息定向爬虫
