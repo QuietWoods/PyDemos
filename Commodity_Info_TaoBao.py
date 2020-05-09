@@ -80,7 +80,7 @@ def parse_detail_page(url, cookies, headers):
 
 
 # 汇总
-def main():
+def main(filename):
     # 爬取的基准网页（s = 0）
 
     base_url = 'https://s.taobao.com/search?q=%E6%B4%97%E5%8F%91%E6%B0%B4&imgfile=&commend=all&ssid=s5-e&search_type=item&sourceId=tb.index&spm=a21bo.2017.201856-taobao-item.1&ie=utf8&initiative_id=tbindexz_20170306&sort=sale-desc&bcoffset=0&p4ppushleft=%2C44&s=0'
@@ -95,17 +95,29 @@ def main():
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
 
     # 设置好存储结果的变量
-    final_result = pd.DataFrame()
 
+    current_page = 1
     # 循环爬取5页
     for url in format_url(base_url, 100):
+        print(current_page)
         print(url)
+        current_page += 1
         # final_result = pd.concat([final_result, parse_page(url, cookies=cookies, headers=headers)])
         result_df = parse_page(url, cookies=cookies, headers=headers)
-        result_df.to_csv('tt.csv', mode='a+')
-    return final_result
+        result_df.to_csv(filename, mode='a+')
+
+    return True
 
 
 if __name__ == "__main__":
-    final_result = main()
+    keyword = "牛奶"
+    filename = keyword + '_' + time.strftime(
+        "%Y-%m-%d_%H-%M-%S",
+        time.localtime(time.time())) + '.csv'
+    final_result = main(filename)
+
+    if final_result:
+        print("end successfully..")
+    else:
+        print('end error..')
     # final_result.to_csv('tt.csv')
